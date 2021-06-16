@@ -5,18 +5,18 @@ type FederatedProperties = {
   module: string;
 };
 
-const Federated: FC<FederatedProperties> = ({ module }) => {
+const Federated: FC<FederatedProperties> = ({ module, ...prop }) => {
   const { Component, error, isLoading } = useLazyLoading(module);
 
   if (error != null && error.trim() != "") {
-    return (<h2>Failed to load dynamic script: {module}</h2>);
+    return <h2>Failed to load dynamic script: {module}</h2>;
   }
   if (isLoading) {
-    return (<h2> Loading</h2>);
+    return <h2> Loading</h2>;
   }
   return (
     <React.Suspense fallback="Loading">
-      <Component />
+      <Component {...prop} />
     </React.Suspense>
   );
 };
